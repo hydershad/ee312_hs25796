@@ -1,10 +1,19 @@
-#include<stdio.h>
+/*
+Code written by HYDER SHAD, UT EID: hs25796
+FALL 2016 EE 312 Software Design
+Professor: BARBER
+TA: NOLAN CORCORAN
+9/1/2016
+Assignment #2 - Conversions
+*/
 
+#include<stdio.h>
 int main(void){
 int conversion = 0;		//user input variable for conversion to execute
 int exit = 0;			//serves as booleaan to exit conversion program
 
 while (exit == 0) {								
+	printf("\n");			//newline helps separate previous answers from new conversion requests
 	printf("Conversion menu:\n");				//output full conversion menu to select from
 	printf("1. Convert a given Austin time to Irish time\n");
 	printf("2. Convert a given Irish time to Austin time\n");
@@ -20,6 +29,7 @@ while (exit == 0) {
 	printf("Enter a number from the menu (1-11) to select a specific conversion to perform or quit.\n");
 	scanf_s("%d", &conversion); //gets user input to determine conversion to execute
 	getchar();
+	printf("\n");  //helps with readability
 
 	if (conversion == 1) {			
 		unsigned int aus_hour = 0;

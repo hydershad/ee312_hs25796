@@ -213,6 +213,5 @@ while (exit == 0) {
 		exit = 1;
 	}
 }
-getchar();
 return 0;
 }

@@ -1,10 +1,19 @@
-#include<stdio.h>
+/*
+Code written by HYDER SHAD, UT EID: hs25796
+FALL 2016 EE 312 Software Design
+Professor: BARBER
+TA: NOLAN CORCORAN
+9/1/2016
+Assignment #2 - Conversions
+*/
 
+#include<stdio.h>
 int main(void){
 int conversion = 0;		//user input variable for conversion to execute
 int exit = 0;			//serves as booleaan to exit conversion program
 
 while (exit == 0) {								
+	printf("\n");			//newline helps separate previous answers from new conversion requests
 	printf("Conversion menu:\n");				//output full conversion menu to select from
 	printf("1. Convert a given Austin time to Irish time\n");
 	printf("2. Convert a given Irish time to Austin time\n");
@@ -20,11 +29,13 @@ while (exit == 0) {
 	printf("Enter a number from the menu (1-11) to select a specific conversion to perform or quit.\n");
 	scanf_s("%d", &conversion); //gets user input to determine conversion to execute
 	getchar();
+	printf("\n");  //helps with readability
 
-	if (conversion == 1) {			
-		unsigned int aus_hour = 0;
-		unsigned int ire_hour = 0;
-		unsigned int ire_min = 0;
+	if (conversion == 1) {		//uses if statements because case/switch has not been covered yet in class	
+		int aus_hour = 0;
+		int ire_hour = 0;
+		int ire_min = 0;
+
 		printf("Enter Austin time to be converted, expressed in hours and minutes: ");
 		scanf_s("%d", &aus_hour);
 		scanf_s("%d", &ire_min);
@@ -47,9 +58,10 @@ while (exit == 0) {
 		conversion = 0; //reset conversion variable
 	}
 	if (conversion == 2) {
-		unsigned int ire_hour = 0;
-		unsigned int aus_hour = 0;
-		unsigned int aus_min = 0;
+		int ire_hour = 0;
+		int aus_hour = 0;
+		int aus_min = 0;
+
 		printf("Enter Irish time to be converted, expressed in hours and minutes: ");
 		scanf_s("%d", &ire_hour);
 		scanf_s("%d", &aus_min);
@@ -75,10 +87,12 @@ while (exit == 0) {
 		double dollars = 0;
 		double cents = 0;
 		double euros = 0;
+		double const RATIO = 0.89;			//euro to dollar ratio
+
 		printf("Enter USD value: ");
 		scanf_s("%lf", &dollars);  //interprets first value (before 'space') as dollar value
 		scanf_s("%lf", &cents); //interprets second value (after 'space') as cent value
-		euros = (dollars*(0.89)) + ((cents/100)*(0.89));  //shifts cents two decimal places over into correct position and multipis bothdollars and cents by correct factor tto get euro value
+		euros = (dollars*(RATIO)) + ((cents/100)*(RATIO));  //shifts cents two decimal places over into correct position and multipis bothdollars and cents by correct factor tto get euro value
 		printf("EUR value is: %lf\n", euros); //prints out uro value a floating point type
 
 		conversion = 0;
@@ -87,15 +101,17 @@ while (exit == 0) {
 		int dollars = 0;
 		int cents = 0;
 		int remainder = 0;
-		float euros = 0;
+		double euros = 0;
+		double const RATIO = 1.13; //dollar to euro ratio
+
 		printf("Enter EUR value: ");
-		scanf_s("%f", &euros);		//gets euro value in floating point type
-		euros = euros*1.13;			//mutplies euro value by correct factor to get USD value
+		scanf_s("%lf", &euros);		//gets euro value in floating point type
+		euros = euros*(RATIO);			//mutplies euro value by correct factor to get USD value
 		dollars = euros / 1;				//stores integer portion of USD value in dollar variable
 		 cents = (euros-dollars)*1000;		//starts operation to round USD decimal value to nearest cent
 		 remainder = cents % 10;
 		 cents = cents / 10;
-		 if (remainder >= 5) {
+		 if (remainder >= 5) {			//determines if cents rounds up or down
 			 cents = cents + 1;
 		 }
 		 printf("USD value is: %d ", dollars);
@@ -107,13 +123,14 @@ while (exit == 0) {
 		double farenheit = 0;
 		int celsius = 0;
 		double remainder = 0;
-		double a = 0.5;
+		double const ROUND = 0.5;			//used to determine if final conversion value is to be rounded up or down
+
 		printf("Enter temperature in Farenheit: ");
 		scanf_s("%lf", &farenheit);
-		celsius = (5*(farenheit - 32))/9;		//integer portion of the conversion kept only in celsius variable
-		remainder = ((5*(farenheit - 32))/9);	
+		celsius = ((farenheit - 32)*5)/9;		//integer portion of the conversion kept only in celsius variable
+		remainder = ((farenheit - 32)*5)/9;	
 		remainder = remainder - celsius;		//determines whether decimal portion of double is greater than or equal to 0.5 for rounding to nearest centigrade
-		if (remainder>=a) {						//round up function
+		if (remainder>=ROUND) {						//round up function
 			celsius = celsius + 1;
 		}
 
@@ -124,13 +141,14 @@ while (exit == 0) {
 		int farenheit = 0;
 		double celsius = 0;
 		double remainder = 0;
-		double a = 0.5;
+		double const ROUND = 0.5;		//used to determine if final conversion value is to be rounded up or down
+
 		printf("Enter temperature in Celsius: ");
 		scanf_s("%lf", &celsius);
-		farenheit = ((9 *celsius)/ 5)+32;		//integer portion of doule converion kept
-		remainder = ((9*celsius)/ 5)+32;		
+		farenheit = ((9* celsius)/5)+32;		//integer portion of doule converion kept
+		remainder = ((9* celsius)/5)+32;	
 		remainder = remainder - farenheit;		//determines whether decimal portion of double is greater than or equal to 0.5 for rounding to nearest degree farenheit
-		if (remainder >= a) {					//round up functtion
+		if (remainder >= ROUND) {					//round up functtion
 			farenheit = farenheit + 1;
 		}
 
@@ -144,17 +162,20 @@ while (exit == 0) {
 		double remainder = 0;
 		int oz = 0;
 		int lbs = 0;
+		const OZ_PER_LB = 16;		//ounces per pound
+		double const RATIO = 0.45359237;	//kg to lbs ratio
+
 		printf("Enter weight in kg: ");		
 		scanf_s("%lf", &kg);
-		a = (kg) / 0.45359237;		//converts from from kg to lbs
-		b = a * 16;					//converts lbs to oz
+		a = (kg) / (RATIO);		//converts from from kg to lbs
+		b = a * OZ_PER_LB;					//converts lbs to oz
 		oz = b;
 		remainder = b - oz;			//rounds to nearest oz
 		if (remainder >= 0.5) {
 			oz = oz + 1;
 		}
-		lbs = oz / 16;				//gets value in pounds from oz
-		oz = oz % 16;				//gets remainder in ounces
+		lbs = oz / OZ_PER_LB;				//gets value in pounds from oz
+		oz = oz % OZ_PER_LB;				//gets remainder in ounces
 		printf("Weight in pounds and ounces is: %d lb and ", lbs);
 		printf("%d oz.\n", oz);
 
@@ -165,12 +186,14 @@ while (exit == 0) {
 		double oz = 0;
 		double a = 0;
 		double kg = 0;
-		
+		const OZ_PER_LB = 16;		//ounces per pound
+		double const RATIO = 0.45359237;	//kg to lbs ratio
+
 		printf("Enter weight in pounds and ounces: ");
 		scanf_s("%lf", &lbs);
 		scanf_s("%lf", &oz);
-		a = oz / 16;
-		kg = (lbs + a)*0.45359237;				//converts oz to lbs
+		a = oz / OZ_PER_LB;
+		kg = (lbs + a)*(RATIO);				//converts oz to lbs
 		printf("Weight in kg is: %lf ", kg);	//converts lbs to kgs
 		printf("kg.\n");
 
@@ -179,10 +202,11 @@ while (exit == 0) {
 	if (conversion == 9) {
 		double km = 0;
 		double mi = 0;
+		double const RATIO = 0.6213712;	//miles per kilometer ratio
 
 		printf("Enter distance in km: ");	
 		scanf_s("%lf", &km);
-		mi = (km * 0.6213712);					//converts km to mi
+		mi = (km * RATIO);					//converts km to mi
 		printf("Distance in miles is: %lf ", mi);
 		printf("mi.\n");
 
@@ -191,10 +215,10 @@ while (exit == 0) {
 	if (conversion == 10) {
 		double km = 0;
 		double mi = 0;
-
+		double const RATIO = 0.6213712; //milles per kilometer ratio
 		printf("Enter distance in miles: ");
 		scanf_s("%lf", &mi);
-		km = (mi / 0.6213712);					//converts mi to km
+		km = (mi / RATIO);					//converts mi to km
 		printf("Distance in km is: %lf ", km);
 		printf("km.\n");
 	}
@@ -203,6 +227,5 @@ while (exit == 0) {
 		exit = 1;
 	}
 }
-getchar();
 return 0;
 }

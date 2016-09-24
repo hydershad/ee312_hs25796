@@ -1,5 +1,13 @@
-#include <stdio.h>
+/*
+ASSIGNMENT #3
+Lab3.c written by HYDER SHAD
+UT EID: hs25796
+FALL 2016 EE 312 - BARBER
+TA: NOLAN CORCORAN
+9/24/2016
+*/
 
+#include <stdio.h>
 
 /*
 * return 1 if the ASCII interpretation of
@@ -78,15 +86,49 @@ char int2LowerCase(int i) {
 * This function takes in a message and computes the frequencies of all the alphabets
 */
 void buildHistogram(char message[], int messageLength, int histogram[], int histogramLength) {
+	int his_pos = 0;
+	int mes_pos = 0;
+	int mes_value = 0;
+	int max_index = 0;
+	int max_val = 0;
+	int flag = 0;
 	int i = 0;
 	int index = 0;
-	
 	for (i = 0; i < messageLength; i++) {
 		if (isAlphabet(message[i]) == 1) {
 			index = ASCII2Int(message[i]);
-			histogram[index] += 1;
+			histogram[index] +=1;
 		}
 	}
+	for (his_pos = 0; his_pos < histogramLength; his_pos++) {
+		if (histogram[his_pos] > max_val) {
+				max_val = histogram[his_pos];
+				max_index = his_pos;
+			}
+
+			if (histogram[his_pos] == max_val) {
+				flag = 0;
+				mes_pos = 0;
+				while ((mes_pos < messageLength) && (flag == 0)) {
+	
+					if ((isAlphabet(message[mes_pos])) == 1) {
+						mes_value = ASCII2Int(message[mes_pos]);
+						if (mes_value == max_index) {
+							//histogram[his_pos] = histogram[his_pos]- 1;
+
+							flag = 1;
+						}
+						if (mes_value == his_pos) {
+							//histogram[max_index] = histogram[max_index]-1;
+							max_index = his_pos;
+							flag = 1;
+						}
+					}
+					mes_pos++;
+				}
+			}
+		}
+	histogram[max_index] = histogram[max_index] + 1;
 }
 
 /*
@@ -104,7 +146,6 @@ int maxIndex(int myArray[], int arrayLength) {
 			max_index = i;
 		}
 	}
-	if (max_val == 0) { return -1; }
 	return max_index;
 }
 
@@ -150,16 +191,14 @@ int mostFrequentLetter(char message[], int messageLength) {
 	int histogram[26] = { 0 };
 	buildHistogram(message, messageLength, histogram, 26);
 	frequent = maxIndex(histogram, 26);
-
 	return frequent;
 }
 
 void decrypt(char cypher[], int cypherLength, int common) {
-	int crypt_frequent = 0;
+
+int crypt_frequent = 0;
 	int decrypt_shift = 0;
 	crypt_frequent = mostFrequentLetter(cypher, cypherLength);
 	decrypt_shift = ((common - crypt_frequent)+26)%26;
 	encrypt(cypher, cypherLength, decrypt_shift);
 }
-
-

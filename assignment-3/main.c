@@ -98,7 +98,6 @@ void testStage2(void) {
 		printf("please try to fix stage 2 before going to stage 3\n");
 	}
 }
-
 char secret[] = "EE312 with Dr. Barber is fun!";
 void testStage3(void) {
 	int key;

@@ -86,16 +86,17 @@ char int2LowerCase(int i) {
 * This function takes in a message and computes the frequencies of all the alphabets
 */
 void buildHistogram(char message[], int messageLength, int histogram[], int histogramLength) {
-	int his_pos = 0;
-	int mes_pos = 0;
+	int his_pos = 0;		//these variable are used to ensure if more than one letter is the most frequent, the one which appears first in
+	int mes_pos = 0;		//the message sequence is considered the most frequent
 	int mes_value = 0;
 	int max_index = 0;
 	int max_val = 0;
 	int flag = 0;
+	
 	int i = 0;
 	int index = 0;
 	for (i = 0; i < messageLength; i++) {
-		if (isAlphabet(message[i]) == 1) {
+		if (isAlphabet(message[i]) == 1) {		//if message character is alphabet, add 1 to its count tally
 			index = ASCII2Int(message[i]);
 			histogram[index] +=1;
 		}
@@ -106,20 +107,17 @@ void buildHistogram(char message[], int messageLength, int histogram[], int hist
 				max_index = his_pos;
 			}
 
-			if (histogram[his_pos] == max_val) {
+			if (histogram[his_pos] == max_val) {	//in event of tie, find out which letter appears in message first
 				flag = 0;
 				mes_pos = 0;
-				while ((mes_pos < messageLength) && (flag == 0)) {
+				while ((mes_pos < messageLength) && (flag == 0)) {	//cycle through message to see which of the two letters appears first
 	
 					if ((isAlphabet(message[mes_pos])) == 1) {
 						mes_value = ASCII2Int(message[mes_pos]);
 						if (mes_value == max_index) {
-							//histogram[his_pos] = histogram[his_pos]- 1;
-
 							flag = 1;
 						}
 						if (mes_value == his_pos) {
-							//histogram[max_index] = histogram[max_index]-1;
 							max_index = his_pos;
 							flag = 1;
 						}
@@ -128,7 +126,8 @@ void buildHistogram(char message[], int messageLength, int histogram[], int hist
 				}
 			}
 		}
-	histogram[max_index] = histogram[max_index] + 1;
+	histogram[max_index] = histogram[max_index] + 1; //ensures the letter which appears most frequently, whether out right 
+													 //or by order in which it appears, is the designated most frequent
 }
 
 /*
@@ -141,7 +140,7 @@ int maxIndex(int myArray[], int arrayLength) {
 	int max_index = 0;
 	int i = 0;
 	for (i = 0; i < arrayLength; i++) {
-		if (myArray[i] > max_val) {
+		if (myArray[i] > max_val) {			//finds maximum value from histogram, buildHistogram function ensures no ties for largest array value
 			max_val = myArray[i];
 			max_index = i;
 		}
@@ -165,12 +164,12 @@ int maxIndex(int myArray[], int arrayLength) {
 */
 void encrypt(char message[], int messageLength, int shift) {
 	int i = 0; //counter
-	int check = 0; //serves as boolean to check if characters are alphabets or not
-	int rotate = (shift % 26);
+
 	for (i = 0; i < messageLength; i++) {
 
 		if (isLowerCase(message[i]) == 1) {
-			message[i] = int2LowerCase((ASCII2Int(message[i]) + shift) % 26);	//converts alphabet charactr into 0-26, adds shift using modulus for wrap around, converts back to alphabet
+			message[i] = int2LowerCase((ASCII2Int(message[i]) + shift) % 26);	//converts alphabet charactr into 0-26, adds shift using modulus for wrap 
+																				//around, converts back to alphabet
 		}
 		if (isUpperCase(message[i]) == 1) {
 			message[i] = int2UpperCase((ASCII2Int(message[i]) + shift) % 26);
@@ -188,17 +187,17 @@ int mostFrequentLetter(char message[], int messageLength) {
 	* Build the histogram and get the index of most frequent alphabet
 	*/
 	int frequent = 0;
-	int histogram[26] = { 0 };
+	int histogram[26] = { 0 };		//histogram keeps track of letter occurences
 	buildHistogram(message, messageLength, histogram, 26);
-	frequent = maxIndex(histogram, 26);
+	frequent = maxIndex(histogram, 26);		//finds maximum value from histogram, buildHistogram function ensures no ties for largest array value
 	return frequent;
 }
 
 void decrypt(char cypher[], int cypherLength, int common) {
 
-int crypt_frequent = 0;
+	int crypt_frequent = 0;
 	int decrypt_shift = 0;
-	crypt_frequent = mostFrequentLetter(cypher, cypherLength);
-	decrypt_shift = ((common - crypt_frequent)+26)%26;
-	encrypt(cypher, cypherLength, decrypt_shift);
+	crypt_frequent = mostFrequentLetter(cypher, cypherLength);	//finds most frequent letter in encrypted message by calling buildHistogram and maxIndex functions
+	decrypt_shift = ((common - crypt_frequent)+26)%26;	//shift required to decrypt the message based on original and encrypted most common letters
+	encrypt(cypher, cypherLength, decrypt_shift);		//decrypt message using the same encryption algorithim by providing the decryption shift to arrive at original message
 }

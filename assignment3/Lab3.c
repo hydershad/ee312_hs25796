@@ -199,5 +199,6 @@ void decrypt(char cypher[], int cypherLength, int common) {
 	int decrypt_shift = 0;
 	crypt_frequent = mostFrequentLetter(cypher, cypherLength);	//finds most frequent letter in encrypted message by calling buildHistogram and maxIndex functions
 	decrypt_shift = ((common - crypt_frequent)+26)%26;	//shift required to decrypt the message based on original and encrypted most common letters
+
 	encrypt(cypher, cypherLength, decrypt_shift);		//decrypt message using the same encryption algorithim by providing the decryption shift to arrive at original message
 }

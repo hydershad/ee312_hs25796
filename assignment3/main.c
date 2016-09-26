@@ -113,9 +113,9 @@ void testStage3(void) {
 }
 
 int main(void) {
-	testStage1();
-	testStage2();
-	testStage3();
-	getchar();
-}
+		testStage1();
+		testStage2();
+		testStage3();
+		getchar();
+	}
 

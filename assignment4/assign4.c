@@ -2,15 +2,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-//void function_name(char str[], char func_name[], FILE *fp);
+
 int isUpperCase(char c);
 int isLowerCase(char c);
 int isAlphabet(char c);
 int valid(char c);
+
 int main(void) {
 
-	
-	int function = 0; //indicates if in function or not
 	int f_count = 0;
 	int c_count = 0;
 	char sentinel[20] = "STOP";
@@ -22,8 +21,9 @@ int main(void) {
 	char func_end[20] = "END_FCN";
 	FILE *fp = 0;
 	int stop = 0;
+
 	while (1) {
-		printf("Assignment 4: Counting SLOCs\nEnter file name to process: \n");
+		printf("Counting SLOCs\nEnter file name to process: \n");
 		gets(filename, 99);
 		stop = strcmp(sentinel, filename);
 		if (stop == 0) {
@@ -35,58 +35,73 @@ int main(void) {
 			printf("File %s failed to open\n\n", filename);
 		}
 		else {
-			printf("\nFile Counting Summary Table\n\n");
-			printf("Filename:   %s\n", filename);      //make sure to prep each source file for delimitng using #define BEGIN_FUNC as { and END_FUNC as }
-			int found_type = 0;
-			int found_func = 0;
-			int emptystring = 0;
-			char i = 0;
-			char j = 0;
-			int flag = 0;
-			char *pointer1 = 0;
-			char *pointer2 = 0;
-			fgets(str, 199, fp);	//find function start/name
-			while (!feof(fp) && found_func == 0) {
-				fgets(str2, 199, fp);
-				pointer1 = strstr(str2, func_start);
-				if (pointer1 == 0) {
-					strcpy(str, str2);
-				}
-				else {
-					found_func = 1;
-				}
-			}
-			if (!feof(fp)) {
-				i = 0;
-				j = 0;
-				printf("%s", str);
-				if (isAlphabet(str[i]) == 0 && (str[i] != '_')) {
-					while (isAlphabet(str[i]) == 0 && (str[i] != '_') && str[i] != 0) {
-						i++;
+				int done = 0;
+				printf("\nFile Counting Summary Table\n\n");
+				printf("Filename:   %s\n", filename);      //make sure to prep each source file for delimitng using #define BEGIN_FUNC as { and END_FUNC as }
+				while(done==0){
+		
+				int found_type = 0;
+				int found_func = 0;
+				int emptystring = 0;
+				char i = 0;
+				char j = 0;
+				int flag = 0;
+				char *pointer1 = 0;
+				
+					fgets(str, 199, fp);	//find function start/name
+					while (!feof(fp) && found_func == 0) {
+						fgets(str2, 199, fp);
+						pointer1 = strstr(str2, func_start);
+						if (pointer1 == 0) {
+							strcpy(str, str2);
+						}
+						else {
+							found_func = 1;
+						}
+					}		
+					if (!feof(fp)) {
+						for (i = 0; i < 100; i++) {
+							func_name[i] = 0;
+						}
+						i = 0;
+						j = 0;
+						if (isAlphabet(str[i]) == 0 && (str[i] != '_')) {
+							while (isAlphabet(str[i]) == 0 && (str[i] != '_') && str[i] != 0) {
+								i++;
+							}
+						}
+						while ((isAlphabet(str[i]) || (str[i] == '_')) && str[i] != 0) {
+							i++;
+						}
+						while (isAlphabet(str[i]) == 0 && (str[i] != '_') && str[i] != 0) {
+							i++;
+						}
+						while (valid(str[i]) && str[i] != 0) {
+							func_name[j] = str[i];
+							i++;
+							j++;
+						}
+						emptystring = strlen(func_name);
+						if (emptystring > 0) {
+							printf("%s			", func_name);
+							f_count++;
+							printf("%d", c_count);
+						}
+						else { break; }
+					}
+					else {
+						if (f_count == 0) {
+							printf("Filename %s does not contain any functions\n\n", filename);
+							done = 1;
+							fclose(fp);
+						}
+						else {
+							printf("\n\nTotal Functions: %d\n", f_count);
+							printf("Total Lines of Code: %d\n", c_count);
+							done = 1;
+						}
 					}
 				}
-				while ((isAlphabet(str[i]) || (str[i] == '_')) && str[i] != 0) {
-					i++;
-				}
-				while (isAlphabet(str[i]) == 0 && (str[i] != '_') && str[i] != 0) {
-					i++;
-				}
-				while (valid(str[i]) && str[i] != 0) {
-					func_name[j] = str[i];
-					i++;
-					j++;
-				}
-				emptystring = strlen(func_name);
-				if (emptystring > 0) {
-					printf("%s", func_name);
-					f_count++;
-				}
-				getchar();
-			}
-			else {
-				printf("Filename %s does not contain any functions\n\n", filename);
-				fclose(fp);
-			}
 		}
 		}
 	}

@@ -7,7 +7,7 @@ int isUpperCase(char c);
 int isLowerCase(char c);
 int isAlphabet(char c);
 int valid(char c);
-
+int code_count(char str[], FILE *fp);
 int main(void) {
 
 	int f_count = 0;
@@ -18,7 +18,6 @@ int main(void) {
 	char str[200];
 	char str2[200];
 	char func_start[20]= "BEGIN_FCN";
-	char func_end[20] = "END_FCN";
 	FILE *fp = 0;
 	int stop = 0;
 
@@ -31,15 +30,16 @@ int main(void) {
 			exit(EXIT_SUCCESS);
 		}
 		fp = fopen(filename, "r");
-		if (fp == 0) {
+		if (fp == 0){
 			printf("File %s failed to open\n\n", filename);
 		}
 		else {
 				int done = 0;
 				printf("\nFile Counting Summary Table\n\n");
 				printf("Filename:   %s\n", filename);      //make sure to prep each source file for delimitng using #define BEGIN_FUNC as { and END_FUNC as }
-				while(done==0){
-		
+
+			while(done==0){
+
 				int found_type = 0;
 				int found_func = 0;
 				int emptystring = 0;
@@ -85,9 +85,12 @@ int main(void) {
 						if (emptystring > 0) {
 							printf("%s			", func_name);
 							f_count++;
-							printf("%d", c_count);
+							c_count = code_count(str, fp);
+							printf("%d\n", c_count);
 						}
-						else { break; }
+						else {
+							break; 
+						}
 					}
 					else {
 						if (f_count == 0) {
@@ -106,7 +109,74 @@ int main(void) {
 		}
 	}
 
-
+int code_count(char str[], FILE *fp) {
+	char *pt = 0;
+	int line_end = 0;
+	int end = 0;
+	int flag = 0;
+	int i = 0;
+	int c_count = 0;
+	char func_end[20] = "END_FCN";
+	while (end == 0) {
+		fgets(str, 199, fp);
+		printf("%s", str);
+		i = 0;
+		line_end = 0;
+		pt = strcmp(str, func_end);
+		if (pt== 0) {
+			end = 1;
+		}
+		else {
+			while (line_end == 0){
+			if (str[i] == '/') {
+				if (str[i + 1] == '*') {
+					i = i + 2;
+					while (flag == 0) {
+						switch (str[i]) {
+						case 0:
+							fgets(str, 199, fp);
+							i = 0;
+							if (feof(fp)) {
+								flag = 1;
+								end = 1;
+							}
+							break;
+						case '*':
+							if (str[i + 1] == '/') {
+								i = i + 2;
+								flag = 1;
+							}
+							else {
+								i++;
+							}
+							break;
+						default:
+							i++;
+							break;
+						}
+					}
+				}
+				if (str[i] == '/') {
+					fgets(str, 199, fp);
+					i = 0;
+				}
+			}
+			if (str[i] == 0) {
+				line_end = 1;
+			}
+			if (str[i] == ';') {
+				c_count++;
+				i++;
+			}
+			else {
+				printf("%c", str[i]);
+				i++;
+			}
+		}
+		}
+	}
+	return c_count;
+}
 int valid(char c) {
 	if ((48 <=c) && (c <= 57)) {
 		return 1;
@@ -168,7 +238,6 @@ while (found_type == 0) {
 					fgets(str, 199, fp);
 					i = 0;
 					if (feof(fp)) {
-						eof_detect = 1;
 						flag = 1;
 					}
 					break;
@@ -187,7 +256,6 @@ while (found_type == 0) {
 				}
 			}
 		}
-
 		if (str[i] == '/') {
 			fgets(str, 199, fp);
 			i = 0;
@@ -222,7 +290,6 @@ while (found_func == 0) {
 					fgets(str, 199, fp);
 					i = 0;
 					if (feof(fp)) {
-						eof_detect = 1;
 						flag = 1;
 					}
 					break;

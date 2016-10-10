@@ -12,11 +12,12 @@ int main(void) {
 
 	int f_count = 0;
 	int c_count = 0;
+	int total_c = 0;
 	char sentinel[20] = "STOP";
-	char filename[100];
+	char filename[100] = { 0 };
 	char func_name[100] = { 0 };
-	char str[200];
-	char str2[200];
+	char str[300] = { 0 };
+	char str2[300] = { 0 };
 	char func_start[20]= "BEGIN_FCN";
 	FILE *fp = 0;
 	int stop = 0;
@@ -48,9 +49,9 @@ int main(void) {
 				int flag = 0;
 				char *pointer1 = 0;
 				
-					fgets(str, 199, fp);	//find function start/name
+					fgets(str, 299, fp);	//find function start/name
 					while (!feof(fp) && found_func == 0) {
-						fgets(str2, 199, fp);
+						fgets(str2, 299, fp);
 						pointer1 = strstr(str2, func_start);
 						if (pointer1 == 0) {
 							strcpy(str, str2);
@@ -86,6 +87,7 @@ int main(void) {
 							printf("%s			", func_name);
 							f_count++;
 							c_count = code_count(str, fp);
+							total_c = total_c + c_count;
 							printf("%d\n", c_count);
 						}
 						else {
@@ -100,7 +102,7 @@ int main(void) {
 						}
 						else {
 							printf("\n\nTotal Functions: %d\n", f_count);
-							printf("Total Lines of Code: %d\n", c_count);
+							printf("Total Lines of Code: %d\n", total_c);
 							done = 1;
 						}
 					}
@@ -118,7 +120,9 @@ int code_count(char str[], FILE *fp) {
 	int c_count = 0;
 	char func_end[20] = "END_FCN";
 	while (end == 0) {
-		fgets(str, 199, fp);
+		fgets(str, 299, fp);
+
+		printf("%s", str);
 		i = 0;
 		line_end = 0;
 		pt = strstr(str, func_end);;
@@ -133,7 +137,7 @@ int code_count(char str[], FILE *fp) {
 					while (flag == 0) {
 						switch (str[i]) {
 						case 0:
-							fgets(str, 199, fp);
+							fgets(str, 299, fp);
 							i = 0;
 							if (feof(fp)) {
 								flag = 1;
@@ -156,8 +160,7 @@ int code_count(char str[], FILE *fp) {
 					}
 				}
 				if (str[i] == '/') {
-					fgets(str, 199, fp);
-					i = 0;
+					line_end = 0;
 				}
 			}
 			if (str[i] == 0) {
@@ -175,6 +178,8 @@ int code_count(char str[], FILE *fp) {
 	}
 	return c_count;
 }
+
+
 int valid(char c) {
 	if ((48 <=c) && (c <= 57)) {
 		return 1;

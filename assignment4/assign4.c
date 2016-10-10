@@ -119,11 +119,10 @@ int code_count(char str[], FILE *fp) {
 	char func_end[20] = "END_FCN";
 	while (end == 0) {
 		fgets(str, 199, fp);
-		printf("%s", str);
 		i = 0;
 		line_end = 0;
-		pt = strcmp(str, func_end);
-		if (pt== 0) {
+		pt = strstr(str, func_end);;
+		if (pt != 0) {
 			end = 1;
 		}
 		else {
@@ -169,7 +168,6 @@ int code_count(char str[], FILE *fp) {
 				i++;
 			}
 			else {
-				printf("%c", str[i]);
 				i++;
 			}
 		}

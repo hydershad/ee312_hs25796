@@ -37,8 +37,8 @@ int main(void) {
 		else {
 				int done = 0;
 				printf("\nFile Counting Summary Table\n\n");
-				printf("Filename:   %s\n", filename);      //make sure to prep each source file for delimitng using #define BEGIN_FUNC as { and END_FUNC as }
-
+				printf("Filename:   %s\n\n", filename);      //make sure to prep each source file for delimitng using #define BEGIN_FUNC as { and END_FUNC as }
+				printf("Function Name           #Lines of Code\n\n");
 			while(done==0){
 
 				int found_type = 0;
@@ -84,7 +84,7 @@ int main(void) {
 						}
 						emptystring = strlen(func_name);
 						if (emptystring > 0) {
-							printf("%s			", func_name);
+							printf("%s		      ", func_name);
 							f_count++;
 							c_count = code_count(str, fp);
 							total_c = total_c + c_count;
@@ -101,8 +101,8 @@ int main(void) {
 							fclose(fp);
 						}
 						else {
-							printf("\n\nTotal Functions: %d\n", f_count);
-							printf("Total Lines of Code: %d\n", total_c);
+							printf("\nTotal Functions: %d\n", f_count);
+							printf("Total Lines of Code: %d\n\n", total_c);
 							done = 1;
 						}
 					}
@@ -121,11 +121,9 @@ int code_count(char str[], FILE *fp) {
 	char func_end[20] = "END_FCN";
 	while (end == 0) {
 		fgets(str, 299, fp);
-
-		printf("%s", str);
 		i = 0;
 		line_end = 0;
-		pt = strstr(str, func_end);;
+		pt = strstr(str, func_end);
 		if (pt != 0) {
 			end = 1;
 		}
@@ -134,6 +132,7 @@ int code_count(char str[], FILE *fp) {
 			if (str[i] == '/') {
 				if (str[i + 1] == '*') {
 					i = i + 2;
+					flag = 0;
 					while (flag == 0) {
 						switch (str[i]) {
 						case 0:
@@ -159,9 +158,10 @@ int code_count(char str[], FILE *fp) {
 						}
 					}
 				}
-				if (str[i] == '/') {
+				if (str[i + 1] == '/') {
 					line_end = 0;
 				}
+				else {}
 			}
 			if (str[i] == 0) {
 				line_end = 1;
@@ -169,6 +169,16 @@ int code_count(char str[], FILE *fp) {
 			if (str[i] == ';') {
 				c_count++;
 				i++;
+			}
+			if (str[i] == '"') {
+				i++;
+				while (str[i] != '"') {
+					i++;
+				}
+				i++;
+				if (str[i] == 0) {
+					line_end = 1;
+				}
 			}
 			else {
 				i++;

@@ -36,6 +36,7 @@ void spellCheck(char article[], char dictionary[]) {
 	int dict_index = 0;
 	int art_index = 0;
 	int done = 0;
+	int i = 0;
 	//how the fuck do i track outputs?????**************************
 	//	probs just make linked list/ sequential(array) through memory allocation on heap, read up on this during bus trip
 
@@ -44,11 +45,20 @@ void spellCheck(char article[], char dictionary[]) {
 			art_index++;
 		}
 		if (article[art_index] == 0) {		//see if end of article reached (null value)
+			done = 1;
 			return;
 		}
-		while ((valid(article[art_index]) == 1)) {
-
+		word_index = 0;
+		for (i = 0;  i< 50; i++){
+			word[i] = 0;
 		}
+		while ((valid(article[art_index]) == 1)) {			//store characters from word into array for dict. comparison process
+			word[word_index] = article[art_index];
+			word_index++;
+			art_index++;
+		}						//break when no more alpha characters
+		printf("%s", word);
+		getchar();
 
 	}
 

@@ -40,7 +40,7 @@ void spellCheck(char article[], char dictionary[]) {
 	//	probs just make linked list/ sequential(array) through memory allocation on heap, read up on this during bus trip
 
 	while (done == 0) {
-		while ((isAlphabet(article[art_index]) && isAlpahbet(article[art_index+1])) == 0 && (article[art_index] != 0)) { //will break if two letters found sequentially or if end or artile detected
+		while ((isAlphabet(article[art_index]) && isAlphabet(article[art_index+1])) == 0 && (article[art_index] != 0)) { //will break if two letters found sequentially or if end or artile detected
 			art_index++;
 		}
 		if (article[art_index] == 0) {		//see if end of article reached (null value)

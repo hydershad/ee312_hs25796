@@ -37,31 +37,41 @@ void spellCheck(char article[], char dictionary[]) {
 	int art_index = 0;
 	int done = 0;
 	int i = 0;
+	int match = 0;
+	int match_count = 0;
 	//how the fuck do i track outputs?????**************************
 	//	probs just make linked list/ sequential(array) through memory allocation on heap, read up on this during bus trip
-
-	while (done == 0) {
+	
+	while (1) {
 		while ((isAlphabet(article[art_index]) && isAlphabet(article[art_index+1])) == 0 && (article[art_index] != 0)) { //will break if two letters found sequentially or if end or artile detected
 			art_index++;
 		}
 		if (article[art_index] == 0) {		//see if end of article reached (null value)
-			done = 1;
+			getchar();
 			return;
 		}
 		word_index = 0;
 		for (i = 0;  i< 50; i++){
 			word[i] = 0;
 		}
-		while ((valid(article[art_index]) == 1)) {			//store characters from word into array for dict. comparison process
-			word[word_index] = article[art_index];
+		while ((valid(article[art_index]) == 1)) {				//store characters from word into array for dict. comparison process
+			word[word_index] = ASCII2Int(article[art_index]);	//convert letters to alphabet indexes for non-case sensitive comparison with dictionary
 			word_index++;
 			art_index++;
-		}						//break when no more alpha characters
-		printf("%s", word);
-		getchar();
-
+		}														//break when no more alpha characters
+		word[word_index] = '\n';								//stick newline at end of word to make dictionary comparison easier to match up and to print result if not in dictionary
+		match_count = word_index;
+		word_index = 0;
+		dict_index = 0;
+		while ((dict_index != 0) && (match == 0)) {
+			
+			if (ASCII2Int(dictionary[dict_index])!= word[word_index]){
+				for (; dictionary[dict_index] != '\n'; dict_index++) {}
+				dict_index++;
+			}
+		}
 	}
-
+	getchar();
 }
 int valid(char c) {
 	if (isAlphabet(c) == 1) {

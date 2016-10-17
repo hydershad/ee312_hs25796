@@ -24,7 +24,7 @@
  * almost certainly find it easiest to just write everything you need from scratch!
  */
 
-//TODO:
+//TO DO:
 int ASCII2Int(char c);
 int isUpperCase(char c);
 int isLowerCase(char c);
@@ -69,7 +69,9 @@ void spellCheck(char article[], char dictionary[]) {
 		match = 0;
 		while ((dictionary[dict_index] != 0) && (match == 0)) {
 			if (ASCII2Int(dictionary[dict_index])!= word[word_index]){		//skips to next word if mismatch
-				for (; dictionary[dict_index] != '\n'; dict_index++) {}
+				for (; dictionary[dict_index] != '\n'; dict_index++) {
+					if (dictionary[dict_index] == 0) break;
+				}
 				dict_index++;
 			}
 			if (ASCII2Int(dictionary[dict_index]) == word[word_index]) {
@@ -92,12 +94,6 @@ void spellCheck(char article[], char dictionary[]) {
 }
 int valid(char c) {
 	if (isAlphabet(c) == 1) {
-		return 1;
-	}
-	if (c == 0x27) {		//apostrophe (')
-		return 1;
-	}
-	if (c == 0x2D) {		//hyphen
 		return 1;
 	}
 	else {

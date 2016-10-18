@@ -39,7 +39,6 @@ void spellCheck(char article[], char dictionary[]) {
 	int done = 0;
 	int i = 0;
 	int match = 0;
-	int match_count = 0;
 
 	//probs just make linked list/ sequential(array) through memory allocation on heap, read up on this during bus trip
 	
@@ -47,7 +46,7 @@ void spellCheck(char article[], char dictionary[]) {
 		while (((isAlphabet(article[art_index]) && isAlphabet(article[art_index+1])) == 0) && (article[art_index] != 0)) { //will break if two letters found sequentially or if end or artile detected
 			art_index++;
 		}
-		if (article[art_index] == 0) {																					 //see if end of article reached (null value)
+		if (article[art_index] == 0) {																					   //see if end of article reached (null value)
 			getchar();//delete
 			return;
 		}
@@ -73,7 +72,7 @@ void spellCheck(char article[], char dictionary[]) {
 				for (; dictionary[dict_index] != '\n'; dict_index++) {
 					if (dictionary[dict_index] == 0) { break; }
 				}
-				dict_index++;									//moves past newline character
+				dict_index++;											//moves past newline character
 			}
 			if (ASCII2Int(dictionary[dict_index]) == word[word_index]) {
 				while (ASCII2Int(dictionary[dict_index]) == word[word_index]) {

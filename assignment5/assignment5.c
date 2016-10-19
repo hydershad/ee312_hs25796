@@ -1,4 +1,8 @@
-/*
+/*HYDER SHAD
+UT EID: hs25796
+TA: NOLAN CORCORAN
+FALL 2016 EE312 - BARBER
+F 3-4 RECITATION
  * assignment5.c
  * SpellCheck
  */

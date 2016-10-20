@@ -33,33 +33,31 @@ int ASCII2Int(char c);
 int isUpperCase(char c);
 int isLowerCase(char c);
 int isAlphabet(char c);
-int valid(char c);
+
 void spellCheck(char article[], char dictionary[]) {
-	char word[50] = { 0 };
+	char word[50] = { 0 };			//holds alphabet index (ASCII2Int) value of word alphabets (eliminates cases matching problems)
 	char printword[50] = { 0 };		//duplicate array to print original word if not in dictionary
 	int word_index = 0;				//indexes for arrays
-	int dict_index = 0;
-	int art_index = 0;
-	int done = 0;
-	int i = 0;
+	int dict_index = 0;				//moves through dictionary array
+	int art_index = 0;				//moves through article			
+	int i = 0;						//junk index for for loops, helps to reset word arrays
 	int match = 0;
 	//probs just make linked list/ sequential(array) through memory allocation on heap, read up on this during bus trip
 	
 	while (1) {
-		while (((isAlphabet(article[art_index]) && isAlphabet(article[art_index+1])) == 0) && (article[art_index] != 0)) { //will break if two letters found sequentially or if end or artile detected
+		while (((isAlphabet(article[art_index]) && isAlphabet(article[art_index+1])) == 0) && (article[art_index] != 0)) { //will break if two letters found sequentially (if a word is found) or if end or artile detected
 			art_index++;
 		}
-		if (article[art_index] == 0) {																					   //see if end of article reached (null value)
-			getchar();
-			return;
+		if (article[art_index] == 0) {	 //see if end of article reached (null value)
+			//insert getchar(); here for debugging or to see output easily
+			return;		//return to caller program
 		}
 		word_index = 0;
-		for (i = 0;  i< 50; i++) {
+		for (i = 0;  i< 50; i++) {		//resets word/printword arrays for new word
 			word[i] = 0;
 			printword[i] = 0;
 		}
-
-		while ((valid(article[art_index]) == 1)) {				//store characters from word into array for dict. comparison process
+		while ((isAlphabet(article[art_index]) == 1)) {				//store characters from word into array for dict. comparison process
 			word[word_index] = ASCII2Int(article[art_index]);	//convert letters to alphabet indexes for non-case sensitive comparison with dictionary
 			printword[word_index] = article[art_index];
 			word_index++;
@@ -67,7 +65,7 @@ void spellCheck(char article[], char dictionary[]) {
 		}														//break when no more alpha characters
 		word[word_index] = '\n';								//stick newline at end of word to make dictionary comparison easier to match up and to print result if not in dictionary
 		printword[word_index] = '\n';
-		word_index = 0;
+		word_index = 0;											//reset indexes for comparison
 		dict_index = 0;
 		match = 0;
 		while ((dictionary[dict_index] != 0) && (match == 0)) {
@@ -78,29 +76,22 @@ void spellCheck(char article[], char dictionary[]) {
 				dict_index++;											//moves past newline character
 			}
 			if (ASCII2Int(dictionary[dict_index]) == word[word_index]) {
-				while (ASCII2Int(dictionary[dict_index]) == word[word_index]) {
+				while (ASCII2Int(dictionary[dict_index]) == word[word_index]) {		//whle dictionary and captured word match
 					dict_index++;
 					word_index++;
 				}
-				if ((dictionary[dict_index] == '\n') && (printword[word_index] == '\n')) {	
+				if ((dictionary[dict_index] == '\n') && (printword[word_index] == '\n')) {	 //if they match perfectly then set match = 1 and exit, do nothing
 					match = 1;
 				}
-				else { word_index = 0; }
+				else { word_index = 0; }	//if not a match, reset word index and try with mext word in dictionary until a match found or end of dictionary reached
 			}
 		}
-		if ((dictionary[dict_index] == 0) && (match == 0)) {
+		if ((dictionary[dict_index] == 0) && (match == 0)) {	//if end of dictioanry reached and no matches print out the word
 			printf("%s", printword);
 		}
 	}
 }
-int valid(char c) {
-	if (isAlphabet(c) == 1) {
-		return 1;
-	}
-	else {
-		return 0;
-	}
-}
+
 int isUpperCase(char c) {
 	if (c >= 'A' && c <= 'Z') {
 		return 1;
@@ -137,6 +128,3 @@ int ASCII2Int(char c) {
 		return -1;
 	}
 }
-
-
-

@@ -3,10 +3,10 @@
 
 //Initialize the starting point of the array
 void init_heap(char heap[]){
-	int metadata = 2496;
+	int metadata = 2496;							//available word space for data
 	int *bytes_to_int = (int *)heap;
 	*bytes_to_int = metadata;
-	bytes_to_int = bytes_to_int + (metadata+2);
+	bytes_to_int = bytes_to_int + (metadata+2);		//jump to second to last word of heap
 	*bytes_to_int = metadata;
 }
 
@@ -33,16 +33,17 @@ char *my_malloc(char heap[], int numbytes) {
 	}
 	  if (*p_int > 0) {
 		  if ((*p_int == words) || ((*p_int) >= (words - 3))) {	//assures metadata blocks are either entirely overwritten or enough space to add new metadata blocks that have free space, no lingering one word or two word chunks of unusable data space.]
-			  if (*p_int == words) { check = 1; }			//alter process if exactly equal to requested # of words to avoidmaking extra metadata piece
+			  if (*p_int == words) { 
+				  check = 1;								//alter process if exactly equal to requested # of words to avoidmaking extra metadata piece
+			  }			
 			  prev_metadata = *p_int;						//collect previous metadata stating available space
 			  q_int = p_int - (prev_metadata + 2);			//find the other corresponding metadata piece
 			  *q_int = prev_metadata - (words + 4);			//subtract from original free space allocated space plus 4 bytes to make new metadata values
-			  *p_int = (-1)*words;							//store new metadata of how many words used
-			  p_int = p_int - words;						//set pointer equal to first data in allocated block (the top of the allocated block)
-			  q_int = p_int - 2;							//make new metadata of how many words allocated
+			  *p_int = (-1)*words;							//store new metadata of how many words used									
+			  q_int = p_int - (words + 2);					//make new metadata of how many words allocated
 			  *q_int = (-1)*words;
 			  if (check == 0) {								//if condition met...
-			  q_int = p_int - 2;
+			  q_int = q_int - 2;
 			  *q_int = prev_metadata - (words + 4);			//make new metadata for how many words are remaining  words that are free
 			  }
 			  empty_block = 1;
@@ -52,11 +53,12 @@ char *my_malloc(char heap[], int numbytes) {
 		  }
 	  }
   }
-  if ((empty_block = 0)||(p_int<=heap_start)) {
+  if ((empty_block == 0)||(p_int<=heap_start)) {
 	  printf("Sorry nothing is available!\n");
 	  return NULL;
   }
   pointer = (char*)p_int;
+  pointer = pointer -1;										//returns a pointer to first byte right above lower metadata
   return pointer;
 }
 

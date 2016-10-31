@@ -89,20 +89,19 @@ void my_free(char heap[], char *p) {
 	if ((upvalue > 0) && (downvalue > 0)) {
 		above = above - (upvalue + 2);
 		below = below + (downvalue + 2);
-		*above = (metadata + downvalue + upvalue) + 8;				//total space to be freed + the four metadata blocks in the middle (8 words)
-		*below = (metadata + downvalue + upvalue) + 8;
+		*above = (((-1)*metadata) + downvalue + upvalue) + 8;				//total space to be freed + the four metadata blocks in the middle (8 words)
+		*below = (((-1)*metadata) + downvalue + upvalue) + 8;
 	}
 	if ((upvalue < 0) && (downvalue > 0)) {
 		below = below + (downvalue + 2);
-		*below = (downvalue + metadata) + 4;						//total space of current plus down and 2 metadata blocks in middle (4 words)
-		pointer = (pointer - metadata) - 2;
-		*pointer = (downvalue + metadata) + 4;
+		*below = (downvalue - metadata) + 4;						//total space of current plus down and 2 metadata blocks in middle (4 words)
+		pointer = (pointer + metadata) - 2;
+		*pointer = (downvalue - metadata) + 4;
 	}
 	if ((upvalue > 0) && (downvalue < 0)) {
 		above = above - (upvalue + 2);
-		*above = (upvalue + metadata) + 4;						//total space of current plus down and 2 metadata blocks in middle (4 words)
-		pointer = (pointer - metadata) - 2;
-		*pointer = (upvalue + metadata) + 4;
+		*above = (upvalue - metadata) + 4;						//total space of current plus down and 2 metadata blocks in middle (4 words)
+		*pointer = (upvalue - metadata) + 4;
 	}
 	else {
 		*pointer = (-1)*metadata;

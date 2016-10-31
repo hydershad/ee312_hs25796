@@ -99,5 +99,6 @@ void my_free(char slab[], char *p) {
 		*pointer = (-1)*metadata;
 		pointer = pointer + (metadata - 2);
 		*pointer = (-1)*metadata;
+	}
 	p = NULL;												//set pointers to NULL, no dangling pointers
 }

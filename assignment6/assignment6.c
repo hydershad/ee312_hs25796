@@ -1,3 +1,12 @@
+/*
+CODE WRITTEN BY: HYDER SHAD
+UT EID: hs25796
+10/30/2016
+TA: NOLAN CORCORAN
+FALL 2016 EE 312, PROF. BARBER
+ASSIGNMENT 6: KNUTH HEAP FUNCTIONS
+*/
+
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -63,7 +72,7 @@ char *my_malloc(char heap[], int numbytes) {
 }
 
 //Deallocate requested memory
-void my_free(char slab[], char *p) {
+void my_free(char heap[], char *p) {
 	char*q = p;
 	q = p + 1;
 	int metadata = 0;

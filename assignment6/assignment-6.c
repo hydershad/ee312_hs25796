@@ -64,11 +64,40 @@ char *my_malloc(char heap[], int numbytes) {
 
 //Deallocate requested memory
 void my_free(char slab[], char *p) {
-
-  /*****************************
-
-	YOUR CODE GOES HERE
-
-  *****************************/
-
+	char*q = p;
+	q = p + 1;
+	int metadata = 0;
+	int *pointer = (int*)q;
+	int *above = 0;											//pointer to metadata above block to be freed
+	int *below = 0;											//pointer to the metadata block below block to be freed
+	int upvalue = 0;										//metadata value above block to be freed
+	int downvalue = 0;										//metadata value below block to be freed
+	metadata = *pointer;									//sizeof block to be freed
+	above = (pointer + (metadata)) - 4;
+	below = pointer + 2;
+	upvalue = *above;
+	downvalue = *below;
+	if ((upvalue > 0) && (downvalue > 0)) {
+		above = above - (upvalue + 2);
+		below = below + (downvalue + 2);
+		*above = (metadata + downvalue + upvalue) + 8;				//total space to be freed + the four metadata blocks in the middle (8 words)
+		*below = (metadata + downvalue + upvalue) + 8;
+	}
+	if ((upvalue < 0) && (downvalue > 0)) {
+		below = below + (downvalue + 2);
+		*below = (downvalue + metadata) + 4;						//total space of current plus down and 2 metadata blocks in middle (4 words)
+		pointer = (pointer - metadata) - 2;
+		*pointer = (downvalue + metadata) + 4;
+	}
+	if ((upvalue > 0) && (downvalue < 0)) {
+		above = above - (upvalue + 2);
+		*above = (upvalue + metadata) + 4;						//total space of current plus down and 2 metadata blocks in middle (4 words)
+		pointer = (pointer - metadata) - 2;
+		*pointer = (upvalue + metadata) + 4;
+	}
+	else {
+		*pointer = (-1)*metadata;
+		pointer = pointer + (metadata - 2);
+		*pointer = (-1)*metadata;
+	p = NULL;												//set pointers to NULL, no dangling pointers
 }

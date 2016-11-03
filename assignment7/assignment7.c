@@ -24,7 +24,6 @@ void generateAllMatchedParens(int n){
 			j--;
 			printf("\n");
 		}
-
 		return;
 	}
 	

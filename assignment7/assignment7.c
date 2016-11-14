@@ -6,11 +6,11 @@ void generateAllMatchedParens(int n){
 	int current = 0;					//can hold up to n=100 matched parentheses, used to keep track of position and also print out permutations
 	int left = 0;						//keeps track of left parentheses
 	int right = 0;						//keeps track of right parentheses
-	if (n <= 0) {						//if n is zero, nothing to print
+	if (n <= 0) {						//if n is zero, nothing to print, return
 		return;
 	}
 	else {
-		parentheses(n, current, left, right, i);
+		parentheses(n, current, left, right, i);	//call recursive function to print out matched parentheses permutations
 	}
 	return;
 	
@@ -41,27 +41,28 @@ void generateAllMatchedParens(int n){
 	}*/
 }
 void parentheses(int n, int current, int left, int right, int i) {		//subfunction tht is recursively called to print matched pair parentheses permutations
-	static char parenArr[200];				//static array to hold up to n=100 matched parentheses
-	if (i == 0) {							//if called the first time reset the static parenArr to print out new n matched parenthess permutations
-		for (i = 0; i < 200; i++) {	
+	static char parenArr[200];											//static array to hold up to n=100 matched parentheses
+	if (i == 0) {														//if called the first time reset the static parenArr to print out new n matched parenthess permutations
+		for (i = 0; i < 200; i++) {
 			parenArr[i] = 0;
 		}
 	}
-	if (right == n){						//base case: when right parentheses is equal to n, no more parentheses to print out, print paren char array
-		printf("%s \n", parenArr);
-		return;								//return back through all recursive function calls
-	}
-	else{									//first try to print left parentheses, then try to match right parenthesis
-		if (left > right) {
-			parenArr[current] = ')';
-			parentheses(n, current+1, left, right+1, i);
+	if(right!=n){														//first try to print left parentheses, then try to match right parenthesis
+		if (left > right){
+			parenArr[current] = ')';									//update array
+			parentheses(n, current+1, left, right+1, i);				//call function with updated values
 		}		
-		if (left < n) {
+		if (left < n){
 			parenArr[current] = '(';
-			parentheses(n, current+1, left+1, right, i);
+			parentheses(n, current+1, left+1, right, i);				//call function with updated values
 		}
+	}
+	else {																//base case: when right parentheses is equal to n, no more parentheses to print out, print paren char array
+		printf("%s \n", parenArr);										//if base case reached print completed array of matched parentheses
+		return;															//return back through recursive function path
 	}
 }
 void generateAllPalindromicDecompositions(char str[]){
-	
+	//opted not to do this function, had a test to study for sorry :(
+	return;
 }

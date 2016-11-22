@@ -1,35 +1,13 @@
 #include <stdio.h>
-#ifndef  _POINT_HH //Point3.hh! 
-#define  _POINT_HH 
-struct node {
-	int val;
-	node *next;
-};
-class LinkedList {
-public:
-	void addToListAtPosition(int, int);
-	int getListLength(void);
-	void addToHead(int);
-	void getHead(void);
-	bool find(int);
-	void appendToList(int);
-	void removeFromListAtPosition(int);
-	void removeFromHead(void);
-	void removeFromEnd(void);
-	void reverseList(void);
-private:
-	int i;
-	int length;
-	node *listHead;
-};
- #endif
+#include "LinkedList.h"
+
 void LinkedList::addToListAtPosition(int position, int value){
 	if ((position < 0) || (position > length)){
 		return;
 	}
 	if (listHead == NULL){
 		listHead = new node;
-		listHead->val = value;
+		listHead->value = value;
 		listHead->next = NULL;
 		length++;
 		return;
@@ -40,7 +18,7 @@ void LinkedList::addToListAtPosition(int position, int value){
 	while (p2!=NULL){
 		if (i == position){
 			p1->next = new node;
-			(p1->next)->val = value;
+			(p1->next)->value = value;
 			(p1->next)->next = p2;
 			length++;
 			return;
@@ -51,7 +29,7 @@ void LinkedList::addToListAtPosition(int position, int value){
 	}
 	if (i == position){
 		p1->next = new node;
-		(p1->next)->val = value;
+		(p1->next)->value = value;
 		(p1->next)->next = p2;
 		length++;
 		return;
@@ -66,10 +44,11 @@ void LinkedList::addToHead(int value){
 	node *p = listHead;
 	listHead = new node;
 	listHead->next = p;
-	listHead->val = value;
+	listHead->value = value;
 }
 
-void LinkedList::getHead(void){				//not required function
+node * LinkedList::getHead(void){				//not required function
+	return listHead;
 }
 
 bool LinkedList::find(int){
@@ -77,6 +56,7 @@ bool LinkedList::find(int){
 }
 
 void LinkedList::appendToList(int){
+
 }
 
 void LinkedList::removeFromListAtPosition(int position){
@@ -125,6 +105,13 @@ void LinkedList::removeFromHead(void){
 }
 
 void LinkedList::removeFromEnd(void){
+	node *p = listHead;
+	node *q = p;
+	while (q!=NULL) {
+		p = q;
+		q = p->next;
+	}
+
 }
 
 void LinkedList::reverseList(void){

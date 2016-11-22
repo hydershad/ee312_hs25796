@@ -7,7 +7,7 @@
 //
 
 #include <stdio.h>
-#include "linkedlist.cpp"
+#include "linkedlist.h"
 #include <cassert>
 
 void test1(){

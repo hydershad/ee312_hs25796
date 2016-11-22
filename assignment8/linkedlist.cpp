@@ -47,7 +47,7 @@ void LinkedList::addToHead(int value){
 	listHead->value = value;
 }
 
-node * LinkedList::getHead(void){				//not required function
+node * LinkedList::getHead(void){				//sends listHead
 	return listHead;
 }
 
@@ -55,8 +55,24 @@ bool LinkedList::find(int){
 	return 0;
 }
 
-void LinkedList::appendToList(int){
-
+void LinkedList::appendToList(int value){
+	node * p = listHead;
+	node * q = p;
+	if (listHead = NULL) {
+		listHead = new node;
+		listHead->value = value;
+		listHead->next = NULL;
+		return;
+	}
+	while (q != NULL) {
+		p = q;
+		q = p->next;
+	}
+	q = new node;
+	p->next = q;
+	q->value = value;
+	q->next = NULL;
+	return;
 }
 
 void LinkedList::removeFromListAtPosition(int position){
@@ -107,9 +123,21 @@ void LinkedList::removeFromHead(void){
 void LinkedList::removeFromEnd(void){
 	node *p = listHead;
 	node *q = p;
-	while (q!=NULL) {
-		p = q;
+	if (listHead == NULL) {
+		return;
+	}
+	if ((listHead->next) == NULL) {
+		listHead = NULL;
+		delete q;
+	}
+	while (1) {
 		q = p->next;
+		if((q->next) == NULL) {
+			p->next = NULL;
+			delete q;
+			return;
+		}
+		p = q;
 	}
 
 }

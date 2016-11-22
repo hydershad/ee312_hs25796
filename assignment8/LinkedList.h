@@ -18,6 +18,7 @@ public:
 	void removeFromEnd(void);
 	void reverseList(void);
 private:
+	int initialize;
 	int i;
 	int length;
 	node *listHead;

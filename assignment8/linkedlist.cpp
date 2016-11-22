@@ -45,6 +45,8 @@ void LinkedList::addToHead(int value){
 	listHead = new node;
 	listHead->next = p;
 	listHead->value = value;
+	length++;
+	return;
 }
 
 node * LinkedList::getHead(void){				//sends listHead
@@ -62,6 +64,7 @@ void LinkedList::appendToList(int value){
 		listHead = new node;
 		listHead->value = value;
 		listHead->next = NULL;
+		length++;
 		return;
 	}
 	while (q != NULL) {
@@ -72,6 +75,7 @@ void LinkedList::appendToList(int value){
 	p->next = q;
 	q->value = value;
 	q->next = NULL;
+	length++;
 	return;
 }
 
@@ -117,6 +121,7 @@ void LinkedList::removeFromHead(void){
 	node * p = listHead;
 	listHead = listHead->next;
 	delete p;
+	length--;
 	return;
 }
 
@@ -129,12 +134,15 @@ void LinkedList::removeFromEnd(void){
 	if ((listHead->next) == NULL) {
 		listHead = NULL;
 		delete q;
+		length--;
+		return;
 	}
 	while (1) {
 		q = p->next;
 		if((q->next) == NULL) {
 			p->next = NULL;
 			delete q;
+			length--;
 			return;
 		}
 		p = q;

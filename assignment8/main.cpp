@@ -84,9 +84,10 @@ void test8(){
     LinkedList l;
     l.addToListAtPosition(0, 1);
     l.addToListAtPosition(1, 2);
-    l.removeFromListAtPosition(0);
-    assert(l.getHead()->value == 2);
-    assert(l.getHead()->next == 0);
+	l.addToListAtPosition(2, 3);
+    l.removeFromListAtPosition(1);
+    assert(l.getHead()->value == 1);
+    assert(l.getHead()->next->value == 3);
     printf("Test8 Passed!\n");
 
     
@@ -118,10 +119,21 @@ void test10(){
 void test11(){
     LinkedList l;
     l.addToListAtPosition(0, 1);
-    l.addToListAtPosition(1, 2);
+	l.addToListAtPosition(1, 2);
+	l.addToListAtPosition(2, 7);
+	l.addToListAtPosition(3, 5);
+	l.appendToList(6);
+	l.appendToList(8);
+	l.appendToList(9);
     l.reverseList();
-    assert(l.getHead()->value == 2);
-    assert(l.getHead()->next->value == 1);
+	printf("%d", l.getHead()->value);
+    assert(l.getHead()->value == 9);
+    assert(l.getHead()->next->value == 8);
+	assert(l.getHead()->next->next->value == 6);
+	assert(l.getHead()->next->next->next->value == 5);
+	assert(l.getHead()->next->next->next->next->value == 7); 
+	assert(l.getHead()->next->next->next->next->next->value == 2);
+	assert(l.getListLength() == 7);
     printf("Test11 Passed!\n");
 
 }

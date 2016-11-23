@@ -99,29 +99,31 @@ bool LinkedList::find(int value){
 }
 
 void LinkedList::appendToList(int value){
-	if (initialize != 1) {
+	if (initialize != 1){
 		listHead = NULL;
 		length = 0;
 		i = 0;
 		initialize = 1;
 	}
-	node * p = listHead;
-	node * q = p;
-	if (listHead = NULL) {
+	if (listHead == NULL) {
 		listHead = new node;
 		listHead->value = value;
 		listHead->next = NULL;
 		length++;
 		return;
 	}
-	while (q != NULL) {
-		p = q;
-		q = p->next;
+
+	node * p = listHead;
+	node * q = p;
+	
+	while (p != NULL){
+		q = p;
+		p = q->next;
 	}
-	q = new node;
-	p->next = q;
-	q->value = value;
-	q->next = NULL;
+	p = new node;
+	q->next = p;
+	p->value = value;
+	p->next = NULL;
 	length++;
 	return;
 }
@@ -221,22 +223,15 @@ void LinkedList::reverseList(void) {
 		i = 0;
 		initialize = 1;
 	}
-	node * p = listHead;
-	node * q = p;
-	node * r = q;
-	if ((p->next) == NULL){
-	return;
+	node * previous = NULL;
+	node * current = listHead;
+	node * next = NULL;
+	while (current != NULL){
+		next = current->next;
+		current->next = previous;
+		previous = current;
+		current = next;
 	}
-	p = q->next;
-	q->next = NULL;
-	q = p;
-	while ((p->next) != NULL) {
-		p = q->next;
-		q->next = r;
-		r = q;
-		q = p;
-	}
-	p->next = r;
-	listHead = p;
+	listHead = previous;
 	return;
 }

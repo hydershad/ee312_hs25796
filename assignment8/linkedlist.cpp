@@ -237,5 +237,6 @@ void LinkedList::reverseList(void) {
 		q = p;
 	}
 	p->next = r;
+	listHead = p;
 	return;
 }

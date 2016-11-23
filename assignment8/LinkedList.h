@@ -1,26 +1,26 @@
 #include <stdio.h>
 #ifndef LinkedList_h		//guards for linkedlist header file
 #define LinkedList_h
-struct node {
+struct node {				//node structure, contains value and pointer to next node
 	int value;
 	node *next;
 };
 class LinkedList {
 public:
-	void addToListAtPosition(int, int);
-	int getListLength(void);
-	void addToHead(int);
-	node * getHead(void);
-	bool find(int);
-	void appendToList(int);
-	void removeFromListAtPosition(int);
-	void removeFromHead(void);
-	void removeFromEnd(void);
-	void reverseList(void);
+	void addToListAtPosition(int, int);	//adds node at desired position, pushes existing node back one
+	int getListLength(void);			//returns list length
+	void addToHead(int);				//inserts node at list head
+	node * getHead(void);				//returns list head
+	bool find(int);						//returns true if value exists in list, false if not found
+	void appendToList(int);				//adds node to end of list
+	void removeFromListAtPosition(int); //remmoves node from desired position
+	void removeFromHead(void);			//removes node from head of list
+	void removeFromEnd(void);			//removes node from end of list
+	void reverseList(void);				//reverses order of list
 private:
-	int initialize;
-	int i;
-	int length;
-	node *listHead;
+	int initialize;						//variable indicating if other private variables have been initialized yet or not
+	int i;								//generic counter
+	int length;							//tracks list length
+	node *listHead;						//node structure list head
 };
 #endif

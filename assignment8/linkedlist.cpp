@@ -2,38 +2,40 @@
 #include "LinkedList.h"
 
 void LinkedList::addToListAtPosition(int position, int value){
-	if (initialize != 1) {
+	if (initialize != 1) {						//initialize variables if not already done
 		listHead = NULL;
 		length = 0;
 		i = 0;
 		initialize = 1;
 	}
-	if ((position < 0) || (position > length)){
+	if ((position < 0) || (position > length)) {		//if desired position is out of bounds, do nothing, return
 		return;
 	}
-	if (listHead == NULL){
-		listHead = new node;
-		listHead->value = value;
-		listHead->next = NULL;
-		length++;
-		return;
-	}
-	int i = 0;
-	node * p = listHead;
-	node * q = p;
-	while (q!=NULL){
-		if (i == position){
-			p->next = new node;
-			(p->next)->value = value;
-			(p->next)->next = q;
+	if (listHead == NULL) {								//if list head does not exist and position is zero, create list head node
+		if (position == 0) {
+			listHead = new node;						//create new node struct
+			listHead->value = value;					//store desired/given value
+			listHead->next = NULL;						//set next to null, only one node in list
 			length++;
 			return;
 		}
-		p = q;
+	}
+	int i = 0;											//else if listhead exist and desired position within bounds, find position and insert new node, pushing existing nodes back
+	node * p = listHead;
+	node * q = p;
+	while (q != NULL) {
+		if (i == position) {
+			p->next = new node;							//create new node and push existing node back one position in list
+			(p->next)->value = value;
+			(p->next)->next = q;
+			length++;									//update length
+			return;										//return
+		}
+		p = q;											//until desired position is found keep moving through list 
 		q = p->next;
 		i++;
 	}
-	if (i == position){
+	if (i == position) {								//handles edge case with position being last in the list
 		p->next = new node;
 		(p->next)->value = value;
 		(p->next)->next = q;
@@ -42,18 +44,18 @@ void LinkedList::addToListAtPosition(int position, int value){
 	}
 }
 
-int LinkedList::getListLength(void){
-	if (initialize != 1) {
+int LinkedList::getListLength(void){		
+	if (initialize != 1) {					//initialize variables if not already done
 		listHead = NULL;
 		length = 0;
 		i = 0;
 		initialize = 1;
 	}
-	return length;
+	return length;							//return the calculated length of the linked list
 }
 
 void LinkedList::addToHead(int value){
-	if (initialize != 1) {
+	if (initialize != 1) {					//initialize variables if not already done
 		listHead = NULL;
 		length = 0;
 		i = 0;
@@ -68,7 +70,7 @@ void LinkedList::addToHead(int value){
 }
 
 node * LinkedList::getHead(void){				//sends listHead
-	if (initialize != 1) {
+	if (initialize != 1) {						//initialize variables if not already done
 		listHead = NULL;
 		length = 0;
 		i = 0;
@@ -78,7 +80,7 @@ node * LinkedList::getHead(void){				//sends listHead
 }
 
 bool LinkedList::find(int value){
-	if (initialize != 1) {
+	if (initialize != 1) {						//initialize variables if not already done
 		listHead = NULL;
 		length = 0;
 		i = 0;
@@ -86,26 +88,26 @@ bool LinkedList::find(int value){
 	}
 	node * p = listHead;
 	int match = 0;
-	while (p != NULL) {
+	while (p != NULL) {						//traverse list until end reached and if desired value is in linked list return true
 		match = p->value;
 		if (match == value) {
 			return true;
 		}
-		else {
+		else {								//moves through list
 			p = p->next;
 		}
 	}
-	return false;
+	return false;							//if end of list reached means vvalue is not in list, return false
 }
 
 void LinkedList::appendToList(int value){
-	if (initialize != 1){
-		listHead = NULL;
+	if (initialize != 1){						//initialize variables if not already done
+		listHead = NULL;						
 		length = 0;
 		i = 0;
 		initialize = 1;
 	}
-	if (listHead == NULL) {
+	if (listHead == NULL) {					//if list empty, ccreate new listhead
 		listHead = new node;
 		listHead->value = value;
 		listHead->next = NULL;
@@ -116,11 +118,11 @@ void LinkedList::appendToList(int value){
 	node * p = listHead;
 	node * q = p;
 	
-	while (p != NULL){
+	while (p != NULL){						//traverse list until last node found
 		q = p;
 		p = q->next;
 	}
-	p = new node;
+	p = new node;							//create new node and attatch to end of list
 	q->next = p;
 	p->value = value;
 	p->next = NULL;
@@ -129,7 +131,7 @@ void LinkedList::appendToList(int value){
 }
 
 void LinkedList::removeFromListAtPosition(int position) {
-	if (initialize != 1) {
+	if (initialize != 1) {					//initialize variables if not already done
 		listHead = NULL;
 		length = 0;
 		i = 0;
@@ -173,7 +175,7 @@ void LinkedList::removeFromListAtPosition(int position) {
 }
 
 void LinkedList::removeFromHead(void) {
-	if (initialize != 1) {
+	if (initialize != 1) {					//initialize variables if not already done
 		listHead = NULL;
 		length = 0;
 		i = 0;
@@ -187,7 +189,7 @@ void LinkedList::removeFromHead(void) {
 }
 
 void LinkedList::removeFromEnd(void) {
-	if (initialize != 1) {
+	if (initialize != 1) {					//initialize variables if not already done
 		listHead = NULL;
 		length = 0;
 		i = 0;
@@ -217,21 +219,21 @@ void LinkedList::removeFromEnd(void) {
 }
 
 void LinkedList::reverseList(void) {
-	if (initialize != 1) {
+	if (initialize != 1) {					//initialize variables if not already done
 		listHead = NULL;
 		length = 0;
 		i = 0;
 		initialize = 1;
 	}
-	node * previous = NULL;
+	node * previous = NULL;				//pointers to hold current, next, and the previous node locations to revverse list order
 	node * current = listHead;
 	node * next = NULL;
-	while (current != NULL){
-		next = current->next;
+	while (current != NULL){			//until end of list reached, change the "next" pointers of each node to point to the previous as you traverse the list
+		next = current->next;			
 		current->next = previous;
 		previous = current;
 		current = next;
 	}
-	listHead = previous;
+	listHead = previous;				//finally once end of list reached make the list head equal to the last node, which is now the first
 	return;
 }

@@ -5,7 +5,11 @@
 //  Created by Elie Antoun on 4/7/16.
 //  Copyright © 2016 Elie Antoun. All rights reserved.
 //
-
+/*CODE WRITTEN BY HYDER SHAD, UT EID: hs25796
+ASSIGNMENT 8 - EE312 SOFTWARE DESIGN FALL 2016
+PROFESSOR BARBER, TA: NOLAN CORCORAN
+11/22/2016
+*/
 #include <stdio.h>
 #include "linkedlist.h"
 #include <cassert>
@@ -55,7 +59,6 @@ void test5(){
     l.addToListAtPosition(1, 2);
     assert(l.getListLength() == 2);
     assert(l.getHead()->value == 1);
-   // assert(l.getHead()->next->value == 2);
     printf("Test5 Passed!\n");
 }
 
@@ -126,7 +129,6 @@ void test11(){
 	l.appendToList(8);
 	l.appendToList(9);
     l.reverseList();
-	printf("%d", l.getHead()->value);
     assert(l.getHead()->value == 9);
     assert(l.getHead()->next->value == 8);
 	assert(l.getHead()->next->next->value == 6);
@@ -137,7 +139,6 @@ void test11(){
     printf("Test11 Passed!\n");
 
 }
-
 
 int main(){
     

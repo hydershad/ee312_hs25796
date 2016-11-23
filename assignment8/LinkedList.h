@@ -1,3 +1,8 @@
+/*CODE WRITTEN BY HYDER SHAD, UT EID: hs25796
+ASSIGNMENT 8 - EE312 SOFTWARE DESIGN FALL 2016
+PROFESSOR BARBER, TA: NOLAN CORCORAN
+11/22/2016
+*/
 #include <stdio.h>
 #ifndef LinkedList_h		//guards for linkedlist header file
 #define LinkedList_h

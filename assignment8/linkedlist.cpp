@@ -1,8 +1,13 @@
+/*CODE WRITTEN BY HYDER SHAD, UT EID: hs25796
+ASSIGNMENT 8 - EE312 SOFTWARE DESIGN FALL 2016
+PROFESSOR BARBER, TA: NOLAN CORCORAN
+11/22/2016
+*/
 #include <stdio.h>
 #include "LinkedList.h"
 
 void LinkedList::addToListAtPosition(int position, int value){
-	if (initialize != 1) {						//initialize variables if not already done
+	if (initialize != 1) {								//initialize variables if not already done
 		listHead = NULL;
 		length = 0;
 		i = 0;
@@ -61,7 +66,7 @@ void LinkedList::addToHead(int value){
 		i = 0;
 		initialize = 1;
 	}
-	node *p = listHead;
+	node *p = listHead;						//insert a new node at the head of the list, pushing existing list head back one index
 	listHead = new node;
 	listHead->next = p;
 	listHead->value = value;
@@ -76,7 +81,7 @@ node * LinkedList::getHead(void){				//sends listHead
 		i = 0;
 		initialize = 1;
 	}
-	return listHead;
+	return listHead;							//returns pointer to list head, returns null pointer if list not created
 }
 
 bool LinkedList::find(int value){
@@ -101,7 +106,7 @@ bool LinkedList::find(int value){
 }
 
 void LinkedList::appendToList(int value){
-	if (initialize != 1){						//initialize variables if not already done
+	if (initialize != 1){					//initialize variables if not already done
 		listHead = NULL;						
 		length = 0;
 		i = 0;
@@ -131,25 +136,26 @@ void LinkedList::appendToList(int value){
 }
 
 void LinkedList::removeFromListAtPosition(int position) {
-	if (initialize != 1) {					//initialize variables if not already done
+	if (initialize != 1) {								//initialize variables if not already done
 		listHead = NULL;
 		length = 0;
 		i = 0;
 		initialize = 1;
 	}
-	if ((position < 0) || (position > length + 1)) {
+	if ((position < 0) || (position > length + 1)) {	//check to see if desired position is within the list, if not, do nothing
 		return;
 	}
-	if (position == 0) {
+	if (position == 0) {								//if list is empty, do nothing
 		if (listHead == NULL) {
 			return;
 		}
-		if (listHead->next == NULL) {
+		if (listHead->next == NULL) {					//deletes list head, makes list head null pointer
 			delete listHead;
 			length--;
+			listHead = NULL;
 			return;
 		}
-		if (listHead->next != NULL) {
+		if (listHead->next != NULL) {					//deletes list head and makes the next node the new list head
 			node *p = listHead;
 			listHead = listHead->next;
 			delete p;
@@ -158,12 +164,12 @@ void LinkedList::removeFromListAtPosition(int position) {
 		}
 	}
 	int i = 0;
-	node * p = listHead;
+	node * p = listHead;								//traverse list until desired position/node found
 	node * q = p;
 	while (q != NULL) {
 		if (i == position) {
-			p->next = q->next;
-			delete q;
+			p->next = q->next;							//append previous node to connect to next node
+			delete q;									//delete desired node
 			length--;
 			return;
 		}
@@ -197,16 +203,16 @@ void LinkedList::removeFromEnd(void) {
 	}
 	node *p = listHead;
 	node *q = p;
-	if (listHead == NULL) {
+	if (listHead == NULL) {					//if list does not exist, do nothing, return
 		return;
 	}
-	if ((listHead->next) == NULL) {
+	if ((listHead->next) == NULL) {			//if list head points to null, delete list head and set to null
 		listHead = NULL;
 		delete q;
 		length--;
 		return;
 	}
-	while (1) {
+	while (1) {								//traverse list until end found (null pointer), and delete that node, making previous node now point to null
 		q = p->next;
 		if ((q->next) == NULL) {
 			p->next = NULL;

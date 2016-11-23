@@ -126,51 +126,51 @@ void LinkedList::appendToList(int value){
 	return;
 }
 
-void LinkedList::removeFromListAtPosition(int position){
+void LinkedList::removeFromListAtPosition(int position) {
 	if (initialize != 1) {
 		listHead = NULL;
 		length = 0;
 		i = 0;
 		initialize = 1;
 	}
-		if ((position < 0) || (position > length + 1)){
+	if ((position < 0) || (position > length + 1)) {
+		return;
+	}
+	if (position == 0) {
+		if (listHead == NULL) {
 			return;
 		}
-		if (position == 0) {
-			if (listHead == NULL) {
-				return;
-			}
-			if (listHead->next == NULL) {
-				delete listHead;
-				length--;
-				return;
-			}
-			if (listHead->next != NULL) {
-				node *p = listHead;
-				listHead = listHead->next;
-				delete p;
-				length--;
-				return;
-			}
+		if (listHead->next == NULL) {
+			delete listHead;
+			length--;
+			return;
 		}
-		int i = 0;
-		node * p = listHead;
-		node * q = p;
-		while (q != NULL){
-			if (i == position){
-				p->next = q->next;
-				delete q;
-				length--;
-				return;
-			}
-			p = q;
-			q = p->next;
-			i++;
+		if (listHead->next != NULL) {
+			node *p = listHead;
+			listHead = listHead->next;
+			delete p;
+			length--;
+			return;
 		}
-		return;							//position not found, nothing to delete
 	}
+	int i = 0;
+	node * p = listHead;
+	node * q = p;
+	while (q != NULL) {
+		if (i == position) {
+			p->next = q->next;
+			delete q;
+			length--;
+			return;
+		}
+		p = q;
+		q = p->next;
+		i++;
+	}
+	return;							//position not found, nothing to delete
+}
 
-void LinkedList::removeFromHead(void){
+void LinkedList::removeFromHead(void) {
 	if (initialize != 1) {
 		listHead = NULL;
 		length = 0;
@@ -184,7 +184,7 @@ void LinkedList::removeFromHead(void){
 	return;
 }
 
-void LinkedList::removeFromEnd(void){
+void LinkedList::removeFromEnd(void) {
 	if (initialize != 1) {
 		listHead = NULL;
 		length = 0;
@@ -204,7 +204,7 @@ void LinkedList::removeFromEnd(void){
 	}
 	while (1) {
 		q = p->next;
-		if((q->next) == NULL) {
+		if ((q->next) == NULL) {
 			p->next = NULL;
 			delete q;
 			length--;
@@ -212,14 +212,30 @@ void LinkedList::removeFromEnd(void){
 		}
 		p = q;
 	}
-
 }
 
-void LinkedList::reverseList(void){
+void LinkedList::reverseList(void) {
 	if (initialize != 1) {
 		listHead = NULL;
 		length = 0;
 		i = 0;
 		initialize = 1;
 	}
+	node * p = listHead;
+	node * q = p;
+	node * r = q;
+	if ((p->next) == NULL){
+	return;
+	}
+	p = q->next;
+	q->next = NULL;
+	q = p;
+	while ((p->next) != NULL) {
+		p = q->next;
+		q->next = r;
+		r = q;
+		q = p;
+	}
+	p->next = r;
+	return;
 }

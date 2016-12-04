@@ -1,7 +1,10 @@
 #include "functions.hh"
+#include <stdio.h>
 
 Poly addPolynomials(Poly p1, Poly p2){
-	/* Change code below */
+	if (p1.length>=p2.length) {
+		printf("swag");
+	}
 	Poly p;
 	return p;
 }

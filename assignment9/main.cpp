@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <cassert>
 
-
 void test00(){
 	Poly p1;
 	Poly p2;

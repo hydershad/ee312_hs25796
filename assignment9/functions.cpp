@@ -6,7 +6,6 @@ Poly addPolynomials(Poly p1, Poly p2){
 	return p;
 }
 
-
 Poly subtractPolynomials(Poly p1, Poly p2){
 	/* Change code below */
 	Poly p;
@@ -18,4 +17,3 @@ Poly multiplyPolynomials(Poly p1, Poly p2){
 	Poly p;
 	return p;
 }
-

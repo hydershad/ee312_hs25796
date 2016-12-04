@@ -4,17 +4,18 @@ public:
 	double value;
 	Node* next;
 	Node(double v, Node* n);
-	Node();
-	~Node();
+	Node();		//constructor
+	~Node();	//deconstructor
 };
 
 class Poly{
 
 public:
 	Node *getHead();
+	int getLength(Node *p);
 	void print();
 	void append(double v);
-	Poly();	//constructor
+	Poly();		//constructor
 	~Poly();	//deconstructor
 private:
 	int initialize;

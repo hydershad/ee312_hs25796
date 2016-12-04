@@ -2,12 +2,12 @@
 #include <stdio.h>
 
 Node::Node(double v, Node* n){
-	/*Your code goes here */
+
 }
 
 Node* Poly::getHead(){
-	if (initialize != 1) {						//initialize variables if not already done
-		listHead = NULL;
+	if (initialize != 1) {					//initialize variables if not already done
+		listHead = nullptr;
 		length = 0;
 		initialize = 1;
 	}
@@ -15,12 +15,12 @@ Node* Poly::getHead(){
 }
 
 void Poly::append(double v){
-	if (initialize != 1) {						//initialize variables if not already done so
-		listHead = NULL;
+	if (initialize != 1) {					//initialize variables if not already done so
+		listHead = nullptr;
 		length = 0;
 		initialize = 1;
 	}
-	if (listHead == nullptr) {					//if list empty, create new listhead
+	if (listHead == nullptr) {				//if list empty, create new listhead
 		listHead = new Node;
 		listHead->value = v;
 		listHead->next = nullptr;
@@ -42,7 +42,14 @@ void Poly::append(double v){
 	length++;
 	return;
 }
-
+int Poly::getLength(Node *p) {
+	int i = 0;
+	while (p!=nullptr){
+		p = p->next;
+		i++;
+	}
+	return i;
+}
 void Poly::print(){
 	Node* temp = getHead();
 	while(temp!=0){
@@ -50,14 +57,15 @@ void Poly::print(){
 		temp = temp->next;
 	}
 }
-Node::Node() {
+Node::Node() {		//constructor
 
 }
-Node::~Node() {
+Node::~Node() {		//deconstructor
 
 }
 Poly::Poly() {		//constructor
-
+	listHead = nullptr;
+	length = 0;
 }
 Poly::~Poly() {		//deconstructor
 

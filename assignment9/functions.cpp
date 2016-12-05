@@ -83,7 +83,26 @@ Poly subtractPolynomials(Poly p1, Poly p2){
 }
 
 Poly multiplyPolynomials(Poly p1, Poly p2){
-	/* Change code below */
+	Node *point1 = p1.listHead;
+	Node *point2 = p2.listHead;
+	int  max_index = (p1.length + p2.length) - 2;
+	double result = 0;
+	double arr[50] = { 0 };
 	Poly p;
+	int i = p1.length;
+	int j = p2.length;
+	for (i = p1.length; i > 0; i--) {
+		point2 = p2.listHead;
+		for (j = p2.length; j > 0; j--) {
+			result = (point1->value)*(point2->value);
+			arr[i + j -2] += result;
+			point2 = point2->next;
+		}
+		point1 = point1->next;
+	}
+	while (max_index >= 0) {
+		p.append(arr[max_index]);
+		max_index--;
+	}
 	return p;
 }

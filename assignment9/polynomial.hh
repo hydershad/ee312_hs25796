@@ -6,6 +6,8 @@ TA: NOLAN CORCORAN
 FALL 2016 EE 312, PROF. BARBER
 ASSIGNMENT 9: C++ Polynomials
 */
+#ifndef polynomial_h		//guards for polynomial header file
+#define polynomial_h
 class Node{
 	
 public:
@@ -28,3 +30,4 @@ public:
 	int length;		 //length of linked list
 	Node *listHead;  //head of polynomial linked list
 };
+#endif

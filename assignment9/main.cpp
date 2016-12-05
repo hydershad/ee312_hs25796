@@ -58,10 +58,25 @@ void test03(){
 	result = addPolynomials(p1, p3);
 	assert(result.getHead()->value == 3);
 }
+void test04() {
+	Poly p1;
+	Poly p2;
+	p1.append(1);
+	p1.append(1);
+	p2.append(1);
+	p2.append(3);
+	p2.append(1);
 
+	Poly result = multiplyPolynomials(p1, p2);
+	assert(result.getHead()->value == 1);
+	assert(result.getHead()->next->value == 4);
+	assert(result.getHead()->next->next->value == 4);
+	assert(result.getHead()->next->next->next->value == 1);
+}
 int main(){
 	test00();
 	test01();
 	test02();
 	test03();
+	test04();
 }

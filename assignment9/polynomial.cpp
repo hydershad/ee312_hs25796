@@ -10,24 +10,14 @@ ASSIGNMENT 9: C++ Polynomials
 #include <stdio.h>
 
 Node::Node(double v, Node* n){
-//dont hae to use
+//don't have to use
 }
 
 Node* Poly::getHead(){
-/*	if (initialize != 1) {					//initialize variables if not already done
-		listHead = nullptr;
-		length = 0;
-		initialize = 1;
-	}*/
 	return listHead;
 }
 
 void Poly::append(double v){
-	/*if (initialize != 1) {					//initialize variables if not already done so
-		listHead = nullptr;
-		length = 0;
-		initialize = 1;
-	}*/
 	if (listHead == nullptr) {				//if list empty, create new listhead
 		listHead = new Node;
 		listHead->value = v;

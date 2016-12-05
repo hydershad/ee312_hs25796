@@ -1,3 +1,11 @@
+/*
+CODE WRITTEN BY: HYDER SHAD
+UT EID: hs25796
+12/4/2016
+TA: NOLAN CORCORAN
+FALL 2016 EE 312, PROF. BARBER
+ASSIGNMENT 9: C++ Polynomials
+*/
 #include "functions.hh"
 #include <stdio.h>
 #include <cassert>
